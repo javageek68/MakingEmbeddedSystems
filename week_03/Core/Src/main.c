@@ -100,11 +100,21 @@ int main(void)
   int pin_num = 0;
   while (1)
   {
+	  // detect if the button is pressed
 	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
 	  {
+		  // loop through the pin numbers until the user releases the button
+
+		  // could use a state machine to keep closer track of the button
+		  // only increment the pin if the button has been both pressed and released
 		  pin_num++;
 		  if (pin_num > 7) pin_num = 0;
+		  //HAL_Delay(500);
 	  }
+
+	  // the light that gets toggled depends on what the counter is on
+	  // when the user lets go of the button.  so it is almost like a
+	  // random number generator.  i love the results.
 
 	  if (pin_num == 0) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_8);
 	  if (pin_num == 1) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_9);
