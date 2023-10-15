@@ -97,17 +97,25 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  int pin_num = 0;
   while (1)
   {
-	  HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_8);
-	  HAL_Delay(1000);
-	  HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_9);
-	  HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_10);
-	  HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_11);
-	  HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_12);
-	  HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_13);
-	  HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_14);
-	  HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_15);
+	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
+	  {
+		  pin_num++;
+		  if (pin_num > 7) pin_num = 0;
+	  }
+
+	  if (pin_num == 0) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_8);
+	  if (pin_num == 1) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_9);
+	  if (pin_num == 2) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_10);
+	  if (pin_num == 3) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_11);
+	  if (pin_num == 4) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_12);
+	  if (pin_num == 5) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_13);
+	  if (pin_num == 6) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_14);
+	  if (pin_num == 7) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_15);
+
+
 
 
     /* USER CODE END WHILE */
