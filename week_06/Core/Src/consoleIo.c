@@ -1,6 +1,7 @@
 // Console IO is a wrapper between the actual in and output and the console code
 // In an embedded system, this might interface to a UART driver.
 
+#include "usart.h"
 #include "consoleIo.h"
 #include <stdio.h>
 
@@ -8,15 +9,17 @@
 #ifdef _WIN32
 #include <conio.h>
 #else
-#include "conioCompat.h"
+//#include "conioCompat.h"
 #endif
 
-static int getch_noblock() {
-    if (_kbhit())
-        return _getch();
-    else
-        return EOF;
-}
+extern UART_HandleTypeDef huart4;
+
+//static int getch_noblock() {
+//    if (_kbhit())
+//        return _getch();
+//    else
+//        return EOF;
+//}
 
 eConsoleError ConsoleIoInit(void)
 {
@@ -24,18 +27,27 @@ eConsoleError ConsoleIoInit(void)
 }
 eConsoleError ConsoleIoReceive(uint8_t *buffer, const uint32_t bufferLength, uint32_t *readLength)
 {
-	uint32_t i = 0;
-	char ch;
-	
-	ch = getch_noblock();
-	while ( ( EOF != ch ) && ( i < bufferLength ) )
-	{
-		buffer[i] = (uint8_t) ch;
-		i++;
-		ch = getch_noblock();
-	}
-	*readLength = i;
-	return CONSOLE_SUCCESS;
+    uint32_t i = 0;
+    uint8_t rxByte = 0;
+
+
+ while (HAL_UART_GetState(&huart4) != HAL_UART_STATE_READY);
+
+ if (HAL_OK != HAL_UART_Receive(&huart4, &rxByte, 1, HAL_MAX_DELAY))
+ {
+  return CONSOLE_ERROR;
+ }
+
+ /* Send echo */
+ HAL_UART_Transmit(&huart4, (uint8_t*)&rxByte, 1, HAL_MAX_DELAY);
+
+ buffer[i] = rxByte;
+ i++;
+
+
+ *readLength = i;
+
+ return CONSOLE_SUCCESS;
 }
 
 eConsoleError ConsoleIoSendString(const char *buffer)
