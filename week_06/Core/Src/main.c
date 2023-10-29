@@ -101,15 +101,15 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   printf("starting\r\n");
   uint8_t tx_buffer[27] = "hello world\r\n";
-  //ConsoleInit();
+  ConsoleInit();
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	HAL_UART_Transmit(&huart1, tx_buffer, 27, HAL_MAX_DELAY);
-	 printf("running\r\n");
-	//ConsoleProcess();
+	//HAL_UART_Transmit(&huart1, tx_buffer, 27, HAL_MAX_DELAY);
+	// printf("running\r\n");
+	ConsoleProcess();
   }
   /* USER CODE END 3 */
 }
