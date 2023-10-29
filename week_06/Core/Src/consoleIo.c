@@ -12,7 +12,7 @@
 //#include "conioCompat.h"
 #endif
 
-extern UART_HandleTypeDef huart4;
+extern UART_HandleTypeDef huart1;
 
 //static int getch_noblock() {
 //    if (_kbhit())
@@ -31,15 +31,15 @@ eConsoleError ConsoleIoReceive(uint8_t *buffer, const uint32_t bufferLength, uin
     uint8_t rxByte = 0;
 
 
- while (HAL_UART_GetState(&huart4) != HAL_UART_STATE_READY);
+ while (HAL_UART_GetState(&huart1) != HAL_UART_STATE_READY);
 
- if (HAL_OK != HAL_UART_Receive(&huart4, &rxByte, 1, HAL_MAX_DELAY))
+ if (HAL_OK != HAL_UART_Receive(&huart1, &rxByte, 1, HAL_MAX_DELAY))
  {
   return CONSOLE_ERROR;
  }
 
  /* Send echo */
- HAL_UART_Transmit(&huart4, (uint8_t*)&rxByte, 1, HAL_MAX_DELAY);
+ HAL_UART_Transmit(&huart1, (uint8_t*)&rxByte, 1, HAL_MAX_DELAY);
 
  buffer[i] = rxByte;
  i++;
