@@ -19,6 +19,8 @@ static eCommandResult_T ConsoleCommandVer(const char buffer[]);
 static eCommandResult_T ConsoleCommandHelp(const char buffer[]);
 static eCommandResult_T ConsoleCommandParamExampleInt16(const char buffer[]);
 static eCommandResult_T ConsoleCommandParamExampleHexUint16(const char buffer[]);
+static eCommandResult_T ConsoleCommandAskSalright(const char buffer[]);
+static eCommandResult_T ConsoleCommandGetTick(const char buffer[]);
 
 static const sConsoleCommandTable_T mConsoleCommandTable[] =
 {
@@ -27,6 +29,8 @@ static const sConsoleCommandTable_T mConsoleCommandTable[] =
     {"ver", &ConsoleCommandVer, HELP("Get the version string")},
     {"int", &ConsoleCommandParamExampleInt16, HELP("How to get a signed int16 from params list: int -321")},
     {"u16h", &ConsoleCommandParamExampleHexUint16, HELP("How to get a hex u16 from the params list: u16h aB12")},
+	{"salright?", &ConsoleCommandAskSalright, HELP("Query status. If you ask 'salright?', it will reply 'salright!!!'")},
+	{"gettick", &ConsoleCommandGetTick, HELP("Returns the tick count'")},
 
 	CONSOLE_COMMAND_TABLE_END // must be LAST
 };
@@ -96,6 +100,32 @@ static eCommandResult_T ConsoleCommandVer(const char buffer[])
     IGNORE_UNUSED_VARIABLE(buffer);
 
 	ConsoleIoSendString(VERSION_STRING);
+	ConsoleIoSendString(STR_ENDLINE);
+	return result;
+}
+
+// Query the status of the system.
+// If you ask "salright?", it will reply "salright!!!"
+static eCommandResult_T ConsoleCommandAskSalright(const char buffer[])
+{
+	eCommandResult_T result = COMMAND_SUCCESS;
+
+    IGNORE_UNUSED_VARIABLE(buffer);
+
+    ConsoleIoSendString("Salright!!!");
+	ConsoleIoSendString(STR_ENDLINE);
+	return result;
+}
+
+static eCommandResult_T ConsoleCommandGetTick(const char buffer[])
+{
+	eCommandResult_T result = COMMAND_SUCCESS;
+
+    IGNORE_UNUSED_VARIABLE(buffer);
+
+    uint32_t tick = HAL_GetTick();
+    ConsoleIoSendString("The tick count is ");
+    ConsoleSendParamInt32(tick);
 	ConsoleIoSendString(STR_ENDLINE);
 	return result;
 }
