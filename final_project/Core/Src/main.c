@@ -20,12 +20,14 @@
 #include "main.h"
 #include "i2c.h"
 #include "spi.h"
+#include "usart.h"
 #include "usb.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
+#include "led_control.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,7 +59,10 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int _write(int fd, char* ptr, int len) {
+    //HAL_UART_Transmit(&huart1, (uint8_t *) ptr, len, HAL_MAX_DELAY);
+    return len;
+}
 /* USER CODE END 0 */
 
 /**
@@ -91,14 +96,49 @@ int main(void)
   MX_I2C1_Init();
   MX_SPI1_Init();
   MX_USB_PCD_Init();
+  MX_USART1_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  unsigned char led_status = 0;
   while (1)
   {
+	  led_status++;
+	  if (led_status > 255) led_status = 0;
+
+	  printf(led_status);
+
+	  set_leds(led_status);
+	  HAL_Delay(1000);
+	  // detect if the button is pressed
+//	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
+//	  {
+//		  // loop through the pin numbers until the user releases the button
+//
+//		  // could use a state machine to keep closer track of the button
+//		  // only increment the pin if the button has been both pressed and released
+//		  led_status++;
+//		  if (led_status > 255) led_status = 0;
+//		  //HAL_Delay(500);
+//	  }
+
+	  // the light that gets toggled depends on what the counter is on
+	  // when the user lets go of the button.  so it is almost like a
+	  // random number generator.  i love the results.
+
+//	  if (pin_num == 0) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_8);
+//	  if (pin_num == 1) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_9);
+//	  if (pin_num == 2) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_10);
+//	  if (pin_num == 3) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_11);
+//	  if (pin_num == 4) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_12);
+//	  if (pin_num == 5) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_13);
+//	  if (pin_num == 6) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_14);
+//	  if (pin_num == 7) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_15);
+
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -145,7 +185,9 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB|RCC_PERIPHCLK_I2C1;
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USB|RCC_PERIPHCLK_USART1
+                              |RCC_PERIPHCLK_I2C1;
+  PeriphClkInit.Usart1ClockSelection = RCC_USART1CLKSOURCE_PCLK2;
   PeriphClkInit.I2c1ClockSelection = RCC_I2C1CLKSOURCE_HSI;
   PeriphClkInit.USBClockSelection = RCC_USBCLKSOURCE_PLL;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
