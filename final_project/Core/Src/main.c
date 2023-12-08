@@ -103,16 +103,20 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  unsigned char led_status = 0;
+//  unsigned char led_status = 0;
+  printf("starting\r\n");
+  uint8_t tx_buffer[27] = "hello world\r\n";
+  ConsoleInit();
   while (1)
   {
-	  led_status++;
-	  if (led_status > 255) led_status = 0;
-
-	  printf("test");
-
-	  set_leds(led_status);
-	  HAL_Delay(1000);
+	  ConsoleProcess();
+//	  led_status++;
+//	  if (led_status > 255) led_status = 0;
+//
+//	  printf("test");
+//
+//	  set_leds(led_status);
+//	  HAL_Delay(1000);
 	  // detect if the button is pressed
 //	  if(HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET)
 //	  {
