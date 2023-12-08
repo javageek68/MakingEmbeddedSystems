@@ -60,7 +60,7 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 int _write(int fd, char* ptr, int len) {
-    //HAL_UART_Transmit(&huart1, (uint8_t *) ptr, len, HAL_MAX_DELAY);
+    HAL_UART_Transmit(&huart1, (uint8_t *) ptr, len, HAL_MAX_DELAY);
     return len;
 }
 /* USER CODE END 0 */
@@ -96,7 +96,7 @@ int main(void)
   MX_I2C1_Init();
   MX_SPI1_Init();
   MX_USB_PCD_Init();
-  MX_USART1_Init();
+  MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -109,7 +109,7 @@ int main(void)
 	  led_status++;
 	  if (led_status > 255) led_status = 0;
 
-	  printf(led_status);
+	  printf("test");
 
 	  set_leds(led_status);
 	  HAL_Delay(1000);
