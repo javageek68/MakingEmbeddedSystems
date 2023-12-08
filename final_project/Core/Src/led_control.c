@@ -9,12 +9,30 @@
 
 void set_leds(unsigned char leds)
 {
-	if (leds & 1 << 0) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_8);
-	if (leds & 1 << 1) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_9);
-	if (leds & 1 << 2) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_10);
-	if (leds & 1 << 3) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_11);
-	if (leds & 1 << 4) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_12);
-	if (leds & 1 << 5) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_13);
-	if (leds & 1 << 6) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_14);
-	if (leds & 1 << 7) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_15);
+
+	if (leds & 1 << 0) HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_SET);
+	else HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
+
+	if (leds & 1 << 0) HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET);
+	else HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+
+	if (leds & 1 << 0) HAL_GPIO_WritePin(GPIOE, GPIO_PIN_10, GPIO_PIN_SET);
+	else HAL_GPIO_WritePin(GPIOE, GPIO_PIN_10, GPIO_PIN_RESET);
+
+	if (leds & 1 << 0) HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_SET);
+	else HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_RESET);
+
+	if (leds & 1 << 0) HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_SET);
+	else HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_RESET);
+
+	if (leds & 1 << 0) HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_SET);
+	else HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_RESET);
+
+	if (leds & 1 << 0) HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_SET);
+	else HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_RESET);
+
+	if (leds & 1 << 0) HAL_GPIO_WritePin(GPIOE, GPIO_PIN_15, GPIO_PIN_SET);
+	else HAL_GPIO_WritePin(GPIOE, GPIO_PIN_15, GPIO_PIN_RESET);
+
+
 }
