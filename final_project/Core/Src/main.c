@@ -27,6 +27,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
+#include "app_settings.h"
 #include "led_control.h"
 /* USER CODE END Includes */
 
@@ -105,11 +106,16 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 //  unsigned char led_status = 0;
   printf("starting\r\n");
-  uint8_t tx_buffer[27] = "hello world\r\n";
+  //uint8_t tx_buffer[27] = "hello world\r\n";
+#if ENABLE_CONSOLE
   ConsoleInit();
+#endif
+
   while (1)
   {
+#if ENABLE_CONSOLE
 	  ConsoleProcess();
+#endif
 //	  led_status++;
 //	  if (led_status > 255) led_status = 0;
 //
@@ -128,19 +134,6 @@ int main(void)
 //		  if (led_status > 255) led_status = 0;
 //		  //HAL_Delay(500);
 //	  }
-
-	  // the light that gets toggled depends on what the counter is on
-	  // when the user lets go of the button.  so it is almost like a
-	  // random number generator.  i love the results.
-
-//	  if (pin_num == 0) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_8);
-//	  if (pin_num == 1) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_9);
-//	  if (pin_num == 2) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_10);
-//	  if (pin_num == 3) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_11);
-//	  if (pin_num == 4) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_12);
-//	  if (pin_num == 5) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_13);
-//	  if (pin_num == 6) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_14);
-//	  if (pin_num == 7) HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_15);
 
 
     /* USER CODE END WHILE */
